@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interactive FHIR R4 Learning Platform - Learn healthcare interoperability through patient journey storytelling">
+    <title>FHIR Journey | Healthcare Interoperability Learning Platform</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Skip Navigation for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="hamburger"></span>
+    </button>
+
+    <!-- Left Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation">
+        <!-- Logo Section -->
+        <div class="logo-container">
+            <a href="#" class="logo" aria-label="MINDBOWSER Home">
+                <img src="mb-logo.png" alt="MINDBOWSER" class="logo-img">
+            </a>
+            <p class="logo-tagline">FHIR Learning Platform</p>
+        </div>
+
+        <!-- Patient Story Introduction -->
+        <div class="patient-intro">
+            <div class="patient-avatar" aria-hidden="true">
+                <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="20" cy="15" r="8" fill="#38B8B3"/>
+                    <path d="M6 38c0-10 6-15 14-15s14 5 14 15" fill="#38B8B3"/>
+                </svg>
+            </div>
+            <div class="patient-info">
+                <span class="patient-name">Maria Santos</span>
+                <span class="patient-id">MRN: MS-2024-0892</span>
+            </div>
+        </div>
+
+        <!-- Navigation Links -->
+        <ul class="nav-list" role="list">
+            <li class="nav-item">
+                <a href="#appointment" class="nav-link active" data-section="appointment">
+                    <span class="nav-icon" aria-hidden="true">📅</span>
+                    <span class="nav-text">Appointment</span>
+                    <span class="nav-step">1</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#encounter" class="nav-link" data-section="encounter">
+                    <span class="nav-icon" aria-hidden="true">🏥</span>
+                    <span class="nav-text">Encounter</span>
+                    <span class="nav-step">2</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#service-request" class="nav-link" data-section="service-request">
+                    <span class="nav-icon" aria-hidden="true">📋</span>
+                    <span class="nav-text">ServiceRequest</span>
+                    <span class="nav-step">3</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#observation" class="nav-link" data-section="observation">
+                    <span class="nav-icon" aria-hidden="true">🔬</span>
+                    <span class="nav-text">Observation</span>
+                    <span class="nav-step">4</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#condition" class="nav-link" data-section="condition">
+                    <span class="nav-icon" aria-hidden="true">🩺</span>
+                    <span class="nav-text">Condition</span>
+                    <span class="nav-step">5</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#allergy" class="nav-link" data-section="allergy">
+                    <span class="nav-icon" aria-hidden="true">⚠️</span>
+                    <span class="nav-text">AllergyIntolerance</span>
+                    <span class="nav-step">6</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#medication" class="nav-link" data-section="medication">
+                    <span class="nav-icon" aria-hidden="true">💊</span>
+                    <span class="nav-text">Medication</span>
+                    <span class="nav-step">7</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#procedure" class="nav-link" data-section="procedure">
+                    <span class="nav-icon" aria-hidden="true">🔧</span>
+                    <span class="nav-text">Procedure</span>
+                    <span class="nav-step">8</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#diagnostic-report" class="nav-link" data-section="diagnostic-report">
+                    <span class="nav-icon" aria-hidden="true">📊</span>
+                    <span class="nav-text">DiagnosticReport</span>
+                    <span class="nav-step">9</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#immunization" class="nav-link" data-section="immunization">
+                    <span class="nav-icon" aria-hidden="true">💉</span>
+                    <span class="nav-text">Immunization</span>
+                    <span class="nav-step">10</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#lifecycle" class="nav-link" data-section="lifecycle">
+                    <span class="nav-icon" aria-hidden="true">🔄</span>
+                    <span class="nav-text">Lifecycle Patterns</span>
+                    <span class="nav-step">11</span>
+                </a>
+            </li>
+        </ul>
+
+        <!-- Progress Indicator -->
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <span class="progress-text" id="progress-text">0% Complete</span>
+        </div>
+    </nav>
+
+    <!-- Sidebar Overlay for Mobile -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- Main Content Area -->
+    <main class="main-content" id="main-content">
+        <!-- Hero Section -->
+        <header class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">FHIR R4 Learning Journey</h1>
+                <p class="hero-subtitle">Follow Maria Santos through her healthcare experience and learn how FHIR resources connect in real clinical workflows</p>
+                <div class="hero-badges">
+                    <span class="badge badge-purple">HL7 FHIR R4</span>
+                    <span class="badge badge-teal">11 Resources</span>
+                    <span class="badge badge-outline">Interactive Learning</span>
+                </div>
+            </div>
+            <div class="hero-visual" aria-hidden="true">
+                <div class="fhir-diagram">
+                    <div class="diagram-node patient">Patient</div>
+                    <div class="diagram-connector"></div>
+                    <div class="diagram-nodes-group">
+                        <div class="diagram-node encounter">Encounter</div>
+                        <div class="diagram-node observation">Observation</div>
+                        <div class="diagram-node medication">Medication</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Patient Story Introduction Card -->
+        <section class="story-intro-card" aria-labelledby="story-intro-title">
+            <div class="story-avatar">
+                <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <circle cx="40" cy="30" r="16" fill="#38B8B3"/>
+                    <path d="M12 76c0-20 12-30 28-30s28 10 28 30" fill="#38B8B3"/>
+                    <circle cx="40" cy="30" r="12" fill="#fff" opacity="0.3"/>
+                </svg>
+            </div>
+            <div class="story-content">
+                <h2 id="story-intro-title">Meet Maria Santos</h2>
+                <p class="story-details">
+                    <strong>Age:</strong> 45 years old | 
+                    <strong>Occupation:</strong> Elementary School Teacher | 
+                    <strong>MRN:</strong> MS-2024-0892
+                </p>
+                <p class="story-narrative">
+                    Maria has been experiencing persistent chest discomfort and shortness of breath during her daily activities. 
+                    After discussing symptoms with her family, she decides to schedule an appointment at <strong>City General Hospital</strong>. 
+                    Follow Maria's journey through the healthcare system and discover how FHIR R4 resources capture each step of her care.
+                </p>
+            </div>
+        </section>
+
+        <!-- Content Sections Container -->
+        <div class="sections-container" id="sections-container">
+            <!-- Sections will be dynamically rendered here -->
+        </div>
+
+        <!-- Footer -->
+        <footer class="main-footer">
+            <div class="footer-content">
+                <p class="footer-brand">
+                    <img src="mb-logo.png" alt="MINDBOWSER" class="footer-logo-img">
+                    <span class="footer-tagline">Building Healthcare Solutions</span>
+                </p>
+                <p class="footer-copyright">&copy; 2024 MINDBOWSER. FHIR&reg; is a registered trademark of HL7.</p>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+    <!-- Scripts -->
+    <script src="fhir-data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
