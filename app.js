@@ -873,3 +873,79 @@ styleSheet.textContent = `
     }
 `;
 document.head.appendChild(styleSheet);
+
+// =========================================
+// THEME TOGGLE
+// =========================================
+(function () {
+  const THEME_KEY = "fhir-platform-theme";
+  const themeToggle = document.getElementById("theme-toggle");
+
+  // Get saved theme or detect system preference, default to dark
+  function getSavedTheme() {
+    const savedTheme = localStorage.getItem(THEME_KEY);
+    if (savedTheme) {
+      return savedTheme;
+    }
+    // Check system preference
+    if (
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: light)").matches
+    ) {
+      return "light";
+    }
+    return "dark";
+  }
+
+  // Apply theme to document
+  function applyTheme(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem(THEME_KEY, theme);
+
+    // Update toggle button aria-label
+    if (themeToggle) {
+      themeToggle.setAttribute(
+        "aria-label",
+        theme === "dark" ? "Switch to light theme" : "Switch to dark theme",
+      );
+    }
+  }
+
+  // Toggle between themes
+  function toggleTheme() {
+    const currentTheme =
+      document.documentElement.getAttribute("data-theme") || "dark";
+    const newTheme = currentTheme === "dark" ? "light" : "dark";
+    applyTheme(newTheme);
+  }
+
+  // Initialize theme on page load
+  applyTheme(getSavedTheme());
+
+  // Listen for system theme changes
+  if (window.matchMedia) {
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        // Only auto-switch if user hasn't manually set a preference
+        if (!localStorage.getItem(THEME_KEY)) {
+          applyTheme(e.matches ? "dark" : "light");
+        }
+      });
+  }
+
+  // Add click handler
+  if (themeToggle) {
+    themeToggle.addEventListener("click", toggleTheme);
+  }
+
+  // Also support keyboard
+  if (themeToggle) {
+    themeToggle.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        toggleTheme();
+      }
+    });
+  }
+})();
