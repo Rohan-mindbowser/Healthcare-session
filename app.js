@@ -47,6 +47,9 @@
    * Initialize the application when DOM is ready
    */
   function init() {
+    // Initialize landing page
+    initLandingPage();
+
     // Cache DOM elements
     cacheDOMElements();
 
@@ -66,6 +69,41 @@
     updateProgress();
 
     console.log("🏥 FHIR Learning Platform initialized");
+  }
+
+  /**
+   * Initialize landing page and handle navigation
+   */
+  function initLandingPage() {
+    const landingPage = document.getElementById("landing-page");
+    const clinicalFlow = document.getElementById("clinical-flow");
+    const startJourneyBtn = document.getElementById("start-journey-btn");
+
+    if (!landingPage || !clinicalFlow || !startJourneyBtn) {
+      return;
+    }
+
+    startJourneyBtn.addEventListener("click", function () {
+      // Fade out landing page
+      landingPage.style.transition = "opacity 0.3s ease, transform 0.3s ease";
+      landingPage.style.opacity = "0";
+      landingPage.style.transform = "scale(0.98)";
+
+      setTimeout(function () {
+        landingPage.style.display = "none";
+        clinicalFlow.style.display = "block";
+        clinicalFlow.style.opacity = "0";
+        clinicalFlow.style.transition = "opacity 0.3s ease";
+
+        // Trigger reflow
+        clinicalFlow.offsetHeight;
+
+        clinicalFlow.style.opacity = "1";
+
+        // Scroll to top
+        window.scrollTo(0, 0);
+      }, 300);
+    });
   }
 
   /**

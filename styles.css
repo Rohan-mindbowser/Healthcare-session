@@ -2020,3 +2020,190 @@ body {
         max-height: none;
     }
 }
+
+/* ============================================
+   LANDING PAGE STYLES
+   ============================================ */
+.landing-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.landing-page::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 20%, rgba(113, 51, 174, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 70% 80%, rgba(56, 184, 179, 0.15) 0%, transparent 40%);
+    animation: landingGradientMove 20s ease-in-out infinite;
+}
+
+@keyframes landingGradientMove {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-5%, -5%); }
+}
+
+.landing-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: var(--spacing-8);
+    max-width: 600px;
+}
+
+.landing-logo {
+    margin-bottom: var(--spacing-8);
+}
+
+.landing-logo-img {
+    height: 60px;
+    width: auto;
+    filter: brightness(0) invert(1);
+}
+
+.landing-title {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-white);
+    margin-bottom: var(--spacing-4);
+    background: linear-gradient(135deg, #FFFFFF 0%, #CBD5E1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.landing-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-gray-400);
+    margin-bottom: var(--spacing-10);
+    line-height: var(--line-height-relaxed);
+}
+
+.landing-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    padding: var(--spacing-5) var(--spacing-8);
+    background: linear-gradient(135deg, var(--color-primary-purple) 0%, var(--color-primary-purple-dark) 100%);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius-xl);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    box-shadow: 0 4px 20px rgba(113, 51, 174, 0.4);
+}
+
+.landing-cta-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(113, 51, 174, 0.5);
+    background: linear-gradient(135deg, var(--color-primary-purple-light) 0%, var(--color-primary-purple) 100%);
+}
+
+.landing-cta-btn:active {
+    transform: translateY(-1px);
+}
+
+.landing-cta-btn .btn-icon {
+    font-size: var(--font-size-2xl);
+}
+
+.landing-cta-btn .btn-arrow {
+    font-size: var(--font-size-xl);
+    transition: transform var(--transition-base);
+}
+
+.landing-cta-btn:hover .btn-arrow {
+    transform: translateX(5px);
+}
+
+.landing-features {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-8);
+    margin-top: var(--spacing-12);
+    flex-wrap: wrap;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    color: var(--color-gray-400);
+    font-size: var(--font-size-sm);
+}
+
+.feature-icon {
+    font-size: var(--font-size-lg);
+}
+
+/* Landing Page Light Theme */
+[data-theme="light"] .landing-page {
+    background: linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 50%, #F8FAFC 100%);
+}
+
+[data-theme="light"] .landing-page::before {
+    background: radial-gradient(circle at 30% 20%, rgba(113, 51, 174, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 70% 80%, rgba(56, 184, 179, 0.1) 0%, transparent 40%);
+}
+
+[data-theme="light"] .landing-logo-img {
+    filter: none;
+}
+
+[data-theme="light"] .landing-title {
+    background: linear-gradient(135deg, #1E293B 0%, #475569 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+[data-theme="light"] .landing-subtitle {
+    color: #64748B;
+}
+
+[data-theme="light"] .feature-item {
+    color: #64748B;
+}
+
+/* Landing Page Mobile Responsive */
+@media (max-width: 768px) {
+    .landing-content {
+        padding: var(--spacing-6);
+    }
+    
+    .landing-title {
+        font-size: var(--font-size-3xl);
+    }
+    
+    .landing-subtitle {
+        font-size: var(--font-size-base);
+    }
+    
+    .landing-cta-btn {
+        padding: var(--spacing-4) var(--spacing-6);
+        font-size: var(--font-size-base);
+    }
+    
+    .landing-features {
+        gap: var(--spacing-4);
+    }
+    
+    .feature-item {
+        font-size: var(--font-size-xs);
+    }
+}
+
+/* Clinical Flow Container */
+.clinical-flow {
+    display: block;
+}

@@ -16,15 +16,47 @@
     </script>
 </head>
 <body>
-    <!-- Skip Navigation for Accessibility -->
-    <a href="#main-content" class="skip-link">Skip to main content</a>
-    
-    <!-- Mobile Menu Toggle -->
-    <button class="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
-        <span class="hamburger"></span>
-    </button>
+    <!-- Landing Page -->
+    <div class="landing-page" id="landing-page">
+        <div class="landing-content">
+            <div class="landing-logo">
+                <img src="mb-logo.png" alt="MINDBOWSER" class="landing-logo-img">
+            </div>
+            <h1 class="landing-title">FHIR R4 Learning Platform</h1>
+            <p class="landing-subtitle">Experience healthcare interoperability through interactive storytelling</p>
+            <button class="landing-cta-btn" id="start-journey-btn">
+                <span class="btn-icon">🏥</span>
+                <span class="btn-text">Clinical Journey of a Patient</span>
+                <span class="btn-arrow">→</span>
+            </button>
+            <div class="landing-features">
+                <div class="feature-item">
+                    <span class="feature-icon">📋</span>
+                    <span class="feature-text">11 FHIR Resources</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">👤</span>
+                    <span class="feature-text">Real Patient Story</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🔄</span>
+                    <span class="feature-text">Interactive Learning</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <!-- Left Sidebar Navigation -->
+    <!-- Clinical Flow Content (Hidden Initially) -->
+    <div class="clinical-flow" id="clinical-flow" style="display: none;">
+        <!-- Skip Navigation for Accessibility -->
+        <a href="#main-content" class="skip-link">Skip to main content</a>
+        
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+            <span class="hamburger"></span>
+        </button>
+
+        <!-- Left Sidebar Navigation -->
     <nav class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation">
         <!-- Logo Section -->
         <div class="logo-container">
@@ -219,6 +251,7 @@
 
     <!-- Toast Notification Container -->
     <div class="toast-container" id="toast-container" aria-live="polite"></div>
+    </div>
 
     <!-- Scripts -->
     <script src="fhir-data.js"></script>
