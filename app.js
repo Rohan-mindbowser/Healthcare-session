@@ -1256,6 +1256,24 @@
   }
 
   /**
+   * Get the primary resource type for FHIR documentation links
+   * Extracts actual resource type from Bundle entries if applicable
+   * @param {Object} resource - FHIR resource object
+   * @returns {string} The primary resource type name
+   */
+  function getPrimaryResourceType(resource) {
+    if (
+      resource.resourceType === "Bundle" &&
+      resource.entry &&
+      resource.entry.length > 0
+    ) {
+      // Return the resource type of the first entry
+      return resource.entry[0].resource?.resourceType || "Bundle";
+    }
+    return resource.resourceType;
+  }
+
+  /**
    * Create a Form viewer component with Fill Values and Map to FHIR buttons
    * @param {Object} resource - FHIR resource object
    * @param {string} sectionId - Section identifier
@@ -1264,6 +1282,7 @@
   function createFormViewer(resource, sectionId) {
     const viewerId = `form-viewer-${sectionId}`;
     const resourceType = resource.resourceType;
+    const primaryResourceType = getPrimaryResourceType(resource);
     const formDef = FormFieldDefinitions[sectionId];
 
     if (!formDef) {
@@ -1333,6 +1352,10 @@
               <span class="resource-type">${resourceType}</span>
             </div>
             <div class="json-output-actions">
+              <button class="json-btn fullscreen-btn" data-json="${escapeHtmlAttr(jsonString)}" data-resource-type="${primaryResourceType}" aria-label="View JSON in fullscreen">
+                <span class="json-btn-icon">⛶</span>
+                <span class="btn-text">Fullscreen</span>
+              </button>
               <button class="json-btn copy-btn" data-json="${escapeHtmlAttr(jsonString)}" aria-label="Copy JSON to clipboard">
                 <span class="json-btn-icon">📋</span>
                 <span class="btn-text">Copy</span>
@@ -1345,6 +1368,13 @@
           </header>
           <div class="json-viewer-content">
             <pre><code class="json-code" id="json-code-${sectionId}"></code></pre>
+          </div>
+          <div class="fhir-resource-link">
+            <a href="https://hl7.org/fhir/R4/${primaryResourceType.toLowerCase()}.html" target="_blank" rel="noopener noreferrer">
+              <span class="link-icon">📖</span>
+              <span>View ${primaryResourceType} specification on HL7 FHIR R4</span>
+              <span class="external-icon">↗</span>
+            </a>
           </div>
         </div>
       </div>
@@ -1360,6 +1390,7 @@
   function createJsonViewer(resource, sectionId) {
     const viewerId = `json-viewer-${sectionId}`;
     const resourceType = resource.resourceType;
+    const primaryResourceType = getPrimaryResourceType(resource);
     const jsonString = JSON.stringify(resource, null, 2);
 
     return `
@@ -1380,7 +1411,7 @@
                         </button>
                         <button class="json-btn fullscreen-btn"
                                 data-json="${escapeHtmlAttr(jsonString)}"
-                                data-resource-type="${resourceType}"
+                                data-resource-type="${primaryResourceType}"
                                 aria-label="View JSON in fullscreen">
                             <span class="json-btn-icon">⛶</span>
                             <span class="btn-text">Fullscreen</span>
@@ -1395,6 +1426,13 @@
                 </header>
                 <div class="json-viewer-content" id="${viewerId}-content">
                     <pre><code class="json-code">${syntaxHighlightJson(jsonString)}</code></pre>
+                </div>
+                <div class="fhir-resource-link">
+                    <a href="https://hl7.org/fhir/R4/${primaryResourceType.toLowerCase()}.html" target="_blank" rel="noopener noreferrer">
+                        <span class="link-icon">📖</span>
+                        <span>View ${primaryResourceType} specification on HL7 FHIR R4</span>
+                        <span class="external-icon">↗</span>
+                    </a>
                 </div>
             </div>
         `;
@@ -1769,6 +1807,13 @@
                 </header>
                 <div class="fullscreen-modal-body">
                     <pre><code class="json-code">${syntaxHighlightJson(decodedJson)}</code></pre>
+                </div>
+                <div class="fullscreen-modal-footer">
+                    <a href="https://hl7.org/fhir/R4/${resourceType.toLowerCase()}.html" target="_blank" rel="noopener noreferrer" class="fhir-spec-link">
+                        <span class="link-icon">📖</span>
+                        <span>View ${resourceType} specification on HL7 FHIR R4</span>
+                        <span class="external-icon">↗</span>
+                    </a>
                 </div>
             </div>
         `;

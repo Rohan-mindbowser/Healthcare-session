@@ -2891,6 +2891,362 @@ const FHIRData = {
           "COMPLETE CARE JOURNEY: Patient's chief complaint (chest discomfort) → Encounter → Observations (BP, Labs) → 2 Diagnoses (Hypertension, Hyperlipidemia) → 2 Medications (Lisinopril, Atorvastatin) + ECG + Prevention (Flu shot)",
       },
     },
+
+    // =========================================
+    // 12. RESOURCE LINKAGE
+    // =========================================
+    {
+      id: "resource-linkage",
+      icon: "🔗",
+      stepNumber: 12,
+      title: "FHIR Resource Linkage",
+      story: {
+        title: "How FHIR Resources Connect",
+        content: `
+                    <p>Throughout Maria's healthcare journey, we've seen how different FHIR resources capture different aspects of her care. But the true power of FHIR lies in how these resources <strong>link together</strong> to form a complete picture.</p>
+                    <p>Think of FHIR resources like pieces of a puzzle - each piece contains important information, but they only tell the full story when connected properly.</p>
+                    <div class="highlight-box">
+                        <div class="highlight-box-title">🎯 Key Insight</div>
+                        <p>References are the "glue" that holds FHIR data together. Every clinical resource references other resources to establish context, provenance, and relationships.</p>
+                    </div>
+                `,
+      },
+      workflow: {
+        title: "Understanding Resource References",
+        content: `
+                    <p>FHIR uses <strong>references</strong> to link resources together. A reference is simply a pointer from one resource to another, expressed as a relative or absolute URL.</p>
+                    
+                    <div class="linkage-visual-container">
+                        <h4 class="linkage-section-title">📊 Resource Linkage Overview</h4>
+                        <div class="linkage-table">
+                            <div class="linkage-row linkage-header">
+                                <div class="linkage-cell">Resource</div>
+                                <div class="linkage-cell">Primary Links</div>
+                                <div class="linkage-cell">Why It Links</div>
+                            </div>
+                            <div class="linkage-row">
+                                <div class="linkage-cell resource-name">🏥 Encounter</div>
+                                <div class="linkage-cell"><span class="link-badge patient">Patient</span> <span class="link-badge practitioner">Practitioner</span></div>
+                                <div class="linkage-cell">Defines who was involved and whom it was for</div>
+                            </div>
+                            <div class="linkage-row">
+                                <div class="linkage-cell resource-name">🩺 Condition</div>
+                                <div class="linkage-cell"><span class="link-badge patient">Patient</span> <span class="link-badge encounter">Encounter</span></div>
+                                <div class="linkage-cell">Records a diagnosis made during that specific visit</div>
+                            </div>
+                            <div class="linkage-row">
+                                <div class="linkage-cell resource-name">🔬 Observation</div>
+                                <div class="linkage-cell"><span class="link-badge patient">Patient</span> <span class="link-badge encounter">Encounter</span> <span class="link-badge service">ServiceRequest</span></div>
+                                <div class="linkage-cell">Links the result to the visit and the original order</div>
+                            </div>
+                            <div class="linkage-row">
+                                <div class="linkage-cell resource-name">💊 MedicationRequest</div>
+                                <div class="linkage-cell"><span class="link-badge patient">Patient</span> <span class="link-badge encounter">Encounter</span> <span class="link-badge condition">Condition</span></div>
+                                <div class="linkage-cell">Links the prescription to the visit and the reason (Condition)</div>
+                            </div>
+                            <div class="linkage-row">
+                                <div class="linkage-cell resource-name">📊 DiagnosticReport</div>
+                                <div class="linkage-cell"><span class="link-badge patient">Patient</span> <span class="link-badge encounter">Encounter</span> <span class="link-badge observation">Observation</span></div>
+                                <div class="linkage-cell">Groups multiple lab results into one final interpretation</div>
+                            </div>
+                            <div class="linkage-row">
+                                <div class="linkage-cell resource-name">🔧 Procedure</div>
+                                <div class="linkage-cell"><span class="link-badge patient">Patient</span> <span class="link-badge encounter">Encounter</span> <span class="link-badge location">Location</span></div>
+                                <div class="linkage-cell">Records an action taken on the patient during the visit</div>
+                            </div>
+                            <div class="linkage-row">
+                                <div class="linkage-cell resource-name">💉 Immunization</div>
+                                <div class="linkage-cell"><span class="link-badge patient">Patient</span></div>
+                                <div class="linkage-cell">Records the administration of a vaccine</div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+      },
+      fhirExplanation: {
+        title: "Visual Resource Relationship Diagram",
+        content: `
+                    <p>The diagram below shows how Maria's clinical data flows through interconnected FHIR resources:</p>
+                    
+                    <div class="fhir-diagram-container">
+                        <div class="diagram-title">Maria Santos - Complete Care Journey</div>
+                        
+                        <!-- Central Patient Node -->
+                        <div class="diagram-central">
+                            <div class="diagram-node patient-node">
+                                <span class="node-icon">👤</span>
+                                <span class="node-label">Patient</span>
+                                <span class="node-detail">Maria Santos</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Connection Lines Container -->
+                        <div class="diagram-connections">
+                            <!-- Left Branch: Encounter & Related -->
+                            <div class="diagram-branch left-branch">
+                                <div class="diagram-node encounter-node">
+                                    <span class="node-icon">🏥</span>
+                                    <span class="node-label">Encounter</span>
+                                    <span class="node-detail">Office Visit</span>
+                                </div>
+                                <div class="branch-arrow">↓</div>
+                                <div class="diagram-sub-nodes">
+                                    <div class="diagram-node condition-node">
+                                        <span class="node-icon">🩺</span>
+                                        <span class="node-label">Condition</span>
+                                        <span class="node-detail">Hypertension</span>
+                                    </div>
+                                    <div class="diagram-node procedure-node">
+                                        <span class="node-icon">🔧</span>
+                                        <span class="node-label">Procedure</span>
+                                        <span class="node-detail">ECG</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Center Branch: Orders & Results -->
+                            <div class="diagram-branch center-branch">
+                                <div class="diagram-node service-node">
+                                    <span class="node-icon">📋</span>
+                                    <span class="node-label">ServiceRequest</span>
+                                    <span class="node-detail">Lab Order</span>
+                                </div>
+                                <div class="branch-arrow">↓</div>
+                                <div class="diagram-node observation-node">
+                                    <span class="node-icon">🔬</span>
+                                    <span class="node-label">Observation</span>
+                                    <span class="node-detail">BP, Labs</span>
+                                </div>
+                                <div class="branch-arrow">↓</div>
+                                <div class="diagram-node report-node">
+                                    <span class="node-icon">📊</span>
+                                    <span class="node-label">DiagnosticReport</span>
+                                    <span class="node-detail">Lipid Panel</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Right Branch: Treatment -->
+                            <div class="diagram-branch right-branch">
+                                <div class="diagram-node medication-node">
+                                    <span class="node-icon">💊</span>
+                                    <span class="node-label">MedicationRequest</span>
+                                    <span class="node-detail">Lisinopril</span>
+                                </div>
+                                <div class="branch-arrow">↓</div>
+                                <div class="diagram-sub-nodes">
+                                    <div class="diagram-node allergy-node">
+                                        <span class="node-icon">⚠️</span>
+                                        <span class="node-label">AllergyIntolerance</span>
+                                        <span class="node-detail">Penicillin</span>
+                                    </div>
+                                    <div class="diagram-node immunization-node">
+                                        <span class="node-icon">💉</span>
+                                        <span class="node-label">Immunization</span>
+                                        <span class="node-detail">Flu Shot</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Legend -->
+                        <div class="diagram-legend">
+                            <div class="legend-title">Reference Flow Legend</div>
+                            <div class="legend-items">
+                                <div class="legend-item"><span class="legend-line solid"></span> Direct Reference (subject, patient)</div>
+                                <div class="legend-item"><span class="legend-line dashed"></span> Contextual Reference (encounter, basedOn)</div>
+                                <div class="legend-item"><span class="legend-line dotted"></span> Supporting Reference (reasonReference, result)</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="highlight-box teal">
+                        <div class="highlight-box-title">💡 Reference Types Explained</div>
+                        <div class="reference-types">
+                            <div class="ref-type">
+                                <code>subject / patient</code>
+                                <span>→ Who is this about? (Always points to Patient)</span>
+                            </div>
+                            <div class="ref-type">
+                                <code>encounter</code>
+                                <span>→ During which visit did this happen?</span>
+                            </div>
+                            <div class="ref-type">
+                                <code>basedOn</code>
+                                <span>→ What order triggered this? (ServiceRequest)</span>
+                            </div>
+                            <div class="ref-type">
+                                <code>reasonReference</code>
+                                <span>→ Why was this done? (Condition)</span>
+                            </div>
+                            <div class="ref-type">
+                                <code>result</code>
+                                <span>→ What observations support this report?</span>
+                            </div>
+                        </div>
+                    </div>
+                `,
+      },
+      fhirResource: {
+        resourceType: "Bundle",
+        id: "bundle-linkage-example",
+        meta: {
+          lastUpdated: "2024-01-15T12:00:00Z",
+        },
+        type: "collection",
+        entry: [
+          {
+            resource: {
+              resourceType: "Patient",
+              id: "patient-maria-santos",
+              _linkageNote:
+                "CENTRAL HUB - All resources reference this Patient",
+              name: [{ family: "Santos", given: ["Maria"] }],
+            },
+          },
+          {
+            resource: {
+              resourceType: "Encounter",
+              id: "encounter-001",
+              _linkageNote:
+                "References: Patient (subject), Practitioner (participant)",
+              status: "finished",
+              subject: {
+                reference: "Patient/patient-maria-santos",
+                _linkExplanation: "This encounter is FOR Maria Santos",
+              },
+              participant: [
+                {
+                  individual: {
+                    reference: "Practitioner/practitioner-dr-chen",
+                    _linkExplanation: "Dr. Chen conducted this encounter",
+                  },
+                },
+              ],
+            },
+          },
+          {
+            resource: {
+              resourceType: "Condition",
+              id: "condition-001",
+              _linkageNote:
+                "References: Patient (subject), Encounter (context)",
+              code: { text: "Essential Hypertension" },
+              subject: {
+                reference: "Patient/patient-maria-santos",
+                _linkExplanation: "Maria HAS this condition",
+              },
+              encounter: {
+                reference: "Encounter/encounter-001",
+                _linkExplanation: "Diagnosed DURING this visit",
+              },
+            },
+          },
+          {
+            resource: {
+              resourceType: "Observation",
+              id: "observation-bp-001",
+              _linkageNote:
+                "References: Patient (subject), Encounter (context), ServiceRequest (basedOn)",
+              code: { text: "Blood Pressure" },
+              valueQuantity: { value: 148, unit: "mmHg" },
+              subject: {
+                reference: "Patient/patient-maria-santos",
+                _linkExplanation: "Measured ON Maria",
+              },
+              encounter: {
+                reference: "Encounter/encounter-001",
+                _linkExplanation: "Measured DURING this visit",
+              },
+              basedOn: [
+                {
+                  reference: "ServiceRequest/servicerequest-vitals",
+                  _linkExplanation: "Performed BECAUSE of this order",
+                },
+              ],
+            },
+          },
+          {
+            resource: {
+              resourceType: "MedicationRequest",
+              id: "medicationrequest-001",
+              _linkageNote:
+                "References: Patient (subject), Encounter (context), Condition (reason)",
+              medicationCodeableConcept: { text: "Lisinopril 10mg" },
+              subject: {
+                reference: "Patient/patient-maria-santos",
+                _linkExplanation: "Prescribed FOR Maria",
+              },
+              encounter: {
+                reference: "Encounter/encounter-001",
+                _linkExplanation: "Prescribed DURING this visit",
+              },
+              reasonReference: [
+                {
+                  reference: "Condition/condition-001",
+                  _linkExplanation: "Prescribed BECAUSE of Hypertension",
+                },
+              ],
+            },
+          },
+          {
+            resource: {
+              resourceType: "DiagnosticReport",
+              id: "diagnosticreport-001",
+              _linkageNote:
+                "References: Patient (subject), Encounter (context), Observation (result)",
+              code: { text: "Lipid Panel" },
+              subject: {
+                reference: "Patient/patient-maria-santos",
+                _linkExplanation: "Report is ABOUT Maria",
+              },
+              encounter: {
+                reference: "Encounter/encounter-001",
+                _linkExplanation: "Collected DURING this visit",
+              },
+              result: [
+                {
+                  reference: "Observation/observation-ldl",
+                  _linkExplanation: "Report CONTAINS this observation",
+                },
+              ],
+            },
+          },
+          {
+            resource: {
+              resourceType: "Procedure",
+              id: "procedure-001",
+              _linkageNote:
+                "References: Patient (subject), Encounter (context), Location (where)",
+              code: { text: "12-lead ECG" },
+              subject: {
+                reference: "Patient/patient-maria-santos",
+                _linkExplanation: "Performed ON Maria",
+              },
+              encounter: {
+                reference: "Encounter/encounter-001",
+                _linkExplanation: "Performed DURING this visit",
+              },
+              location: {
+                reference: "Location/location-cardiology",
+                _linkExplanation: "Performed AT Cardiology Dept",
+              },
+            },
+          },
+          {
+            resource: {
+              resourceType: "Immunization",
+              id: "immunization-001",
+              _linkageNote: "References: Patient (patient) - minimal linkage",
+              vaccineCode: { text: "Influenza vaccine" },
+              patient: {
+                reference: "Patient/patient-maria-santos",
+                _linkExplanation: "Given TO Maria",
+              },
+            },
+          },
+        ],
+      },
+    },
   ],
 };
 
