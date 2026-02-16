@@ -187,18 +187,6 @@ const FHIRData = {
           lastUpdated: "2024-01-15T10:30:00Z",
         },
         status: "fulfilled",
-        serviceCategory: [
-          {
-            coding: [
-              {
-                system:
-                  "http://terminology.hl7.org/CodeSystem/service-category",
-                code: "17",
-                display: "General Practice",
-              },
-            ],
-          },
-        ],
         serviceType: [
           {
             coding: [
@@ -374,18 +362,6 @@ const FHIRData = {
           code: "AMB",
           display: "ambulatory",
         },
-        type: [
-          {
-            coding: [
-              {
-                system: "http://snomed.info/sct",
-                code: "11429006",
-                display: "Consultation",
-              },
-            ],
-            text: "Primary Care Consultation",
-          },
-        ],
         serviceType: {
           coding: [
             {
@@ -447,25 +423,6 @@ const FHIRData = {
               },
             ],
             text: "Chest discomfort with exertion",
-          },
-        ],
-        diagnosis: [
-          {
-            condition: {
-              reference: "Condition/condition-001",
-              display: "Essential Hypertension",
-            },
-            use: {
-              coding: [
-                {
-                  system:
-                    "http://terminology.hl7.org/CodeSystem/diagnosis-role",
-                  code: "billing",
-                  display: "Billing",
-                },
-              ],
-            },
-            rank: 1,
           },
         ],
         location: [
